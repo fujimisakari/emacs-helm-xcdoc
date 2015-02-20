@@ -136,7 +136,7 @@ are the string substitutions (see `format')."
 
 (defun helm-xcdoc--open-eww (file-path)
   (if helm-xcdoc--use-otherwin
-      (let (buf current-buffer)
+      (let ((buf (current-buffer)))
         (eww-open-file (helm-xcdoc--extract-html file-path))
         (switch-to-buffer buf)
         (pop-to-buffer "*eww*"))
