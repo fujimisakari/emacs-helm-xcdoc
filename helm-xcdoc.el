@@ -151,10 +151,10 @@ are the string substitutions (see `format')."
     (with-current-buffer (helm-candidate-buffer 'global)
       (let ((coding-system-for-read buf-coding)
             (coding-system-for-write buf-coding))
-        (mapcar (lambda (row)
-                  (insert (concat row "\n")))
-                (helm-xcdoc--construct-candidates-from-command-res
-                 (helm-xcdoc--excecute-search helm-xcdoc--query helm-xcdoc-document-path)))
+        (mapc (lambda (row)
+                (insert (concat row "\n")))
+              (helm-xcdoc--construct-candidates-from-command-res
+               (helm-xcdoc--excecute-search helm-xcdoc--query helm-xcdoc-document-path)))
         (if (zerop (length (buffer-string)))
             (error "No output: '%s'" helm-xcdoc--query))))))
 
