@@ -5,7 +5,7 @@
 ;; Author: Ryo Fujimoto <fujimisakri@gmail.com>
 ;; URL: https://github.com/fujimisakari/emacs-helm-xcdoc
 ;; Version: 0.0.1
-;; Package-Requires: ((helm "1.5"))
+;; Package-Requires: ((helm "1.5") (emacs "24.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
