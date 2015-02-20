@@ -119,7 +119,7 @@ are the string substitutions (see `format')."
 
 (defun helm-xcdoc--construct-candidates-from-command-res (res)
   (let ((path-list (split-string res "\n")))
-    (setq path-list (remove-if-not (lambda (s) (string-match ".*\\.html.*" s)) path-list))
+    (setq path-list (cl-remove-if-not (lambda (s) (string-match ".*\\.html.*" s)) path-list))
     (setq path-list (mapcar (lambda (s) (car (last (split-string s " "))))
                       (mapcar 'helm-xcdoc--remove-hash path-list)))
     (sort (delete-dups path-list) 'string<)))
