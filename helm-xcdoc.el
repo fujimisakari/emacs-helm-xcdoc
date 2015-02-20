@@ -96,7 +96,7 @@ are the string substitutions (see `format')."
   (re-search-forward helm-xcdoc--query nil t))
 (advice-add 'eww-render :after 'helm-xcdoc--set-start-at)
 
-(defun helm-xcdoc--construct-command (query docset)
+(defun helm-xcdoc--construct-command (query _docset)
   (unless (executable-find helm-xcdoc-command-path)
     (error "'docsetutil' is not installed."))
   (unless (file-directory-p helm-xcdoc-document-path)
