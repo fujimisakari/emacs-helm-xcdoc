@@ -5,7 +5,7 @@
 ;; Author: Ryo Fujimoto <fujimisakri@gmail.com>
 ;; URL: https://github.com/fujimisakari/emacs-helm-xcdoc
 ;; Version: 0.0.1
-;; Package-Requires: ((helm "1.5"))
+;; Package-Requires: ((helm "1.5") (emacs "24.4"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -96,7 +96,7 @@ are the string substitutions (see `format')."
   (re-search-forward helm-xcdoc--query nil t))
 (advice-add 'eww-render :after 'helm-xcdoc--set-start-at)
 
-(defun helm-xcdoc--construct-command (query docset)
+(defun helm-xcdoc--construct-command (query _docset)
   (unless (executable-find helm-xcdoc-command-path)
     (error "'docsetutil' is not installed."))
   (unless (file-directory-p helm-xcdoc-document-path)
@@ -119,7 +119,7 @@ are the string substitutions (see `format')."
 
 (defun helm-xcdoc--construct-candidates-from-command-res (res)
   (let ((path-list (split-string res "\n")))
-    (setq path-list (remove-if-not (lambda (s) (string-match ".*\\.html.*" s)) path-list))
+    (setq path-list (cl-remove-if-not (lambda (s) (string-match ".*\\.html.*" s)) path-list))
     (setq path-list (mapcar (lambda (s) (car (last (split-string s " "))))
                       (mapcar 'helm-xcdoc--remove-hash path-list)))
     (sort (delete-dups path-list) 'string<)))
@@ -136,7 +136,7 @@ are the string substitutions (see `format')."
 
 (defun helm-xcdoc--open-eww (file-path)
   (if helm-xcdoc--use-otherwin
-      (let (buf current-buffer)
+      (let ((buf (current-buffer)))
         (eww-open-file (helm-xcdoc--extract-html file-path))
         (switch-to-buffer buf)
         (pop-to-buffer "*eww*"))
@@ -151,10 +151,10 @@ are the string substitutions (see `format')."
     (with-current-buffer (helm-candidate-buffer 'global)
       (let ((coding-system-for-read buf-coding)
             (coding-system-for-write buf-coding))
-        (mapcar (lambda (row)
-                  (insert (concat row "\n")))
-                (helm-xcdoc--construct-candidates-from-command-res
-                 (helm-xcdoc--excecute-search helm-xcdoc--query helm-xcdoc-document-path)))
+        (mapc (lambda (row)
+                (insert (concat row "\n")))
+              (helm-xcdoc--construct-candidates-from-command-res
+               (helm-xcdoc--excecute-search helm-xcdoc--query helm-xcdoc-document-path)))
         (if (zerop (length (buffer-string)))
             (error "No output: '%s'" helm-xcdoc--query))))))
 
