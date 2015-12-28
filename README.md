@@ -1,5 +1,7 @@
 # helm-xcdoc.el
 
+[![MELPA](http://melpa.org/packages/helm-xcdoc-badge.svg)](http://melpa.org/#/helm-xcdoc)
+
 ## Introduction
 
 `helm-xcdoc.el` will be able to view on a eww by searching in the Xcode Document at helm interface
