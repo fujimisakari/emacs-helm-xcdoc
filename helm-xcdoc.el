@@ -74,7 +74,7 @@
   :type 'integer
   :group 'helm-xcdoc)
 
-(defvar helm-xcdoc--query nil
+(defvar helm-xcdoc--query ""
   "query word")
 (defvar helm-xcdoc--use-otherwin nil
   "split window flag")
